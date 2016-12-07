@@ -35,6 +35,11 @@ public class LoadMoreListView extends ListView {
     private OnLoadListener onLoadListener;
 
     /**
+     * 加载控制器
+     */
+    private LoadController loadController;
+
+    /**
      * 加载状态监听器
      */
     public interface OnLoadListener {
@@ -44,6 +49,18 @@ public class LoadMoreListView extends ListView {
          * @param listView 当前操作的ListView
          */
         void onLoadMore(ListView listView);
+    }
+
+    /**
+     * 控制ListView是否自动加载的对象
+     */
+    public interface LoadController {
+        /**
+         * 是否还有更多数据。
+         *
+         * @return true-还有更多数据，滑动到底部依然触发加载事件，false-说明没有更多数据可以加载，此时滑动到最底部，不会触发加载事件。
+         */
+        boolean haveMoreData();
     }
 
     public LoadMoreListView(Context context) {
@@ -76,6 +93,9 @@ public class LoadMoreListView extends ListView {
                 if (!loading
                         && canScrollUp()
                         && reachBottom(firstVisibleItem, visibleItemCount, totalItemCount)) {
+                    if (loadController != null && !loadController.haveMoreData()) {
+                        return;
+                    }
                     loading();
                 }
             }
@@ -135,6 +155,15 @@ public class LoadMoreListView extends ListView {
      */
     public void setOnLoadListener(OnLoadListener onLoadListener) {
         this.onLoadListener = onLoadListener;
+    }
+
+    /**
+     * 设置加载控制器
+     *
+     * @param loadController
+     */
+    public void setLoadController(LoadController loadController) {
+        this.loadController = loadController;
     }
 
     /**

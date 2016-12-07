@@ -49,6 +49,12 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "click : " + data.get(position - loadMoreListView.getHeaderViewsCount()), Toast.LENGTH_SHORT).show();
             }
         });
+        loadMoreListView.setLoadController(new LoadMoreListView.LoadController() {
+            @Override
+            public boolean haveMoreData() {
+                return data.size() < 120;
+            }
+        });
 
 
         addData();
