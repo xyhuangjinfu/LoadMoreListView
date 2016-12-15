@@ -1,6 +1,7 @@
 package cn.hjf.loadmorelistview;
 
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.Gravity;
 import android.view.View;
@@ -81,6 +82,13 @@ public class LoadMoreListView extends ListView {
     private void init(Context context, AttributeSet attrs, int defStyleAttr) {
         this.context = context;
         loadingView = getDefaultLoadingView();
+
+        /**
+         * 修复4.4以下版本会出现Adapter类型转换的错误。{@link ListView#addFooterView(View)}
+         */
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            addHeaderView(new View((context)));
+        }
 
         setOnScrollListener(new OnScrollListener() {
             @Override

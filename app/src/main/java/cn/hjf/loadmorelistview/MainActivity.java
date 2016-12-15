@@ -26,8 +26,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         loadMoreListView = (LoadMoreListView) findViewById(R.id.listview);
-        loadMoreListView.addFooterView(getNormalView());
-        loadMoreListView.addHeaderView(getNormalView());
+//        loadMoreListView.addFooterView(getNormalView());
+//        loadMoreListView.addHeaderView(getNormalView());
         loadMoreListView.setLoadingView(getLoadingView());
         loadMoreListView.setOnLoadListener(new LoadMoreListView.OnLoadListener() {
             @Override
@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean haveMoreData() {
                 return data.size() < 120;
+//                return false;
             }
         });
 
